@@ -57,8 +57,8 @@ function update_calculation() {
 	var svg_width = svg_drawing.viewbox().width;
 	var w0 = svg_width * 0.9;
 	var h0 = 50;
-	var x0 = 10;
-	var y0 = svg_width * 0.05;
+	var x0 = svg_width * 0.05;
+	var y0 = 20;
 
 	var transform_coord_x = function(x) {
 		return x * w0 / width_total;
