@@ -68,7 +68,9 @@ function update_calculation() {
 		return [0, 0,    w, 0,    w, h,     0, h,    0, 0];
 	}
 	
-	var line_style = { color: '#f06', width: 1, linecap: 'round', linejoin: 'round' };
+	var line_style = { color: 'black', width: 1, linecap: 'round', linejoin: 'round' };
+	var fill_style_board = 'BurlyWood';
+	var fill_style_single = 'NavajoWhite';
 	
 	svg_drawing.clear();
 	
@@ -78,7 +80,7 @@ function update_calculation() {
 		var marker1 = margin + i*(thickness + spacing);
 		var polyline = svg_drawing.polyline(polyrect(transform_coord_x(thickness), 70));
 		polyline.move(x0 + transform_coord_x(marker1), 10);
-		polyline.fill('none');
+		polyline.fill(fill_style_board);
 		polyline.stroke(line_style);
 	}
 
