@@ -140,18 +140,31 @@ $(function() {
 
 	<h1>Calculate equidistant board layout</h1>
 	You want to lay out n boards with equal width and equal spacing?
-	
-	<h2>Input</h2>
+
 	
 	<ul class="nav nav-tabs">
-  <li class="active"><a data-toggle="tab" href="#q_total">total width</a></li>
-  <li><a data-toggle="tab" href="#q_spacing">spacing</a></li>
-</ul>
+		<li class="nav-item active"><a data-toggle="tab" href="#q_total">total width</a></li>
+		<li class="nav-item"><a data-toggle="tab" href="#q_spacing">spacing</a></li>
+	</ul>
 
-<div class="tab-content">
-  <div id="q_total" class="tab-pane fade in active">
+	<div class="tab-content">
+		<div id="q_total" class="tab-pane fade in active">
+		</div>
+ 	 	
+		<div id="q_spacing" class="tab-pane fade">
+  		</div>
+	</div>
 
-	  	<div class="form-group row">
+
+	<div class="float-right">
+		<button type="button" class="btn btn-primary d-print-none" id="btn-update">Update</button>
+	</div>
+
+	<h2>Input</h2>
+	
+	
+
+	<div class="form-group row">
 		<label for="thickness" class="col-3 col-form-label">thickness:</label>
    		<div class="col-9">
 		        <input id="thickness" type="number" placeholder="thickness" class="form-control target" min="0">
@@ -189,12 +202,7 @@ $(function() {
    	 	</div>
   	</div>    
 	
-	<div class="float-right">
-		<button type="button" class="btn btn-primary d-print-none" id="btn-update">Update</button>
-	</div>
 	
-	<h2>Result</h2>
-
 	<div class="form-group row">
     		<label for="width_single" class="col-3 col-form-label">width board+spacing:</label>
    		<div class="col-9">
@@ -207,13 +215,6 @@ $(function() {
     			<input type="number" class="form-control" id="width_total" readonly>
    	 	</div>
   	</div>
-
-	  
-	</div>
-  <div id="q_spacing" class="tab-pane fade">
-  </div>
-</div>
-	
 	
 
 	<div id="drawing" class="center-block"></div>
