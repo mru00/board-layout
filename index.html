@@ -15,51 +15,48 @@
       	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<style>
-		body { font-size: 80%; }
+		body { font-size: 80%; padding: 50%; }
 	</style>
 
 	<script type="text/javascript">
 
 
     $(window).on('load', function() {
+"use strict";
       
 function preload_values() {
-	"use strict";
-  $("#thickness").val(55);
+  	$("#thickness").val(55);
  	$("#count").val(9);
  	$("#spacing").val(35);
-  $("#margin").val(10);
+  	$("#margin").val(10);
 }
 
-
 $(function() {
-	"use strict";
   
 	preload_values();
 
 	$(".target").change(function(){
-  var thickness = + $("#thickness").val();
-  var count = + $("#count").val();
-  var spacing = + $("#spacing").val();
-  var margin = + $("#margin").val();
+		var thickness = + $("#thickness").val();
+		var count = + $("#count").val();
+		var spacing = + $("#spacing").val();
+		var margin = + $("#margin").val();
   
-  
-  $("#width_total").val( thickness * count + spacing * (count -1) + 2*margin );
-  $("#width_single").val(thickness + spacing );
+  		$("#width_total").val( thickness * count + spacing * (count -1) + 2*margin );
+  		$("#width_single").val(thickness + spacing );
 
-	$('#markers > tbody').empty();
-	var i;
-	for (i = 0; i< count; ++i) {
-  	var marker1 = margin + i*(thickness + spacing);
-  	var marker2 = marker1 + thickness;
-		$('#markers').append('<tr><td>L'+(i+1)+'</td><td>'+marker1+'</td></tr>');
-		$('#markers').append('<tr><td>R'+(i+1)+'</td><td>'+marker2+'</td></tr>');
-	}
+		$('#markers > tbody').empty();
+		var i;
+		for (i = 0; i< count; ++i) {
+  			var marker1 = margin + i*(thickness + spacing);
+  			var marker2 = marker1 + thickness;
+			$('#markers').append('<tr><td>'+(i+1)+' L</td><td>'+marker1+'</td></tr>');
+			$('#markers').append('<tr><td>'+(i+1)+' R</td><td>'+marker2+'</td></tr>');
+		}
+
+	});
+});
 
 });
-});
-
-    });
 
 </script>
 
