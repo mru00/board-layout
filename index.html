@@ -13,46 +13,6 @@
 	<style>
 	</style>
 
-	<script type="text/javascript">
-
-
-    $(window).on('load', function() {
-"use strict";
-      
-function preload_values() {
-  	$("#thickness").val(55);
- 	$("#count").val(9);
- 	$("#spacing").val(35);
-  	$("#margin").val(10);
-}
-function update_calculation() {
-	var thickness = + $("#thickness").val();
-	var count = + $("#count").val();
-	var spacing = + $("#spacing").val();
-	var margin = + $("#margin").val();
-  
-	$("#width_total").val( thickness * count + spacing * (count -1) + 2*margin );
-	$("#width_single").val(thickness + spacing );
-
-	$('#markers > tbody').empty();
-	var i;
-	for (i = 0; i< count; ++i) {
-		var marker1 = margin + i*(thickness + spacing);
-		var marker2 = marker1 + thickness;
-		$('#markers').append('<tr><td>'+(i+1)+' L</td><td>'+marker1+'</td></tr>');
-		$('#markers').append('<tr><td>'+(i+1)+' R</td><td>'+marker2+'</td></tr>');
-	}
-}
-
-$(function() {
-	preload_values();
-	$(".target").change(update_calculation);
-	$("#btn-update").click(update_calculation);
-});
-
-});
-
-</script>
 
 </head>
 
@@ -125,6 +85,46 @@ $(function() {
       	<script type="text/javascript" src="//code.jquery.com/jquery-3.3.1.slim.min.js"></script>
       	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
       	<script type="text/javascript" src="//stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+
+	<script type="text/javascript">
+      
+function preload_values() {
+"use strict";
+  	$("#thickness").val(55);
+ 	$("#count").val(9);
+ 	$("#spacing").val(35);
+  	$("#margin").val(10);
+}
+function update_calculation() {
+"use strict";
+	var thickness = + $("#thickness").val();
+	var count = + $("#count").val();
+	var spacing = + $("#spacing").val();
+	var margin = + $("#margin").val();
+  
+	$("#width_total").val( thickness * count + spacing * (count -1) + 2*margin );
+	$("#width_single").val(thickness + spacing );
+
+	$('#markers > tbody').empty();
+	var i;
+	for (i = 0; i< count; ++i) {
+		var marker1 = margin + i*(thickness + spacing);
+		var marker2 = marker1 + thickness;
+		$('#markers').append('<tr><td>'+(i+1)+' L</td><td>'+marker1+'</td></tr>');
+		$('#markers').append('<tr><td>'+(i+1)+' R</td><td>'+marker2+'</td></tr>');
+	}
+}
+
+$(function() {
+"use strict";
+	preload_values();
+	update_calculation();
+	$(".target").change(update_calculation);
+	$("#btn-update").click(update_calculation);
+});
+
+	</script>
 
 	
 	</body>
