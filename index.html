@@ -98,7 +98,7 @@ function update_calculation() {
 		$('#markers').append('<tr><td>'+(i+1)+'</td><td>'+marker1+'</td><td>'+marker2+'</td></tr>');
 
 		var poly;
-		if (thickness == 0) {
+		if (thickness != 0) {
 			poly = svg_drawing.rect(transform_coord_x(thickness), board_h);
 			poly.fill(fill_style_board);
 		}
