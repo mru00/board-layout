@@ -59,22 +59,29 @@ function update_calculation() {
 	var h0 = 50;
 	var x0 = 10;
 	var y0 = 20;
+	var x1 = x0 + w0;
+	var y1 = y1 + h0;
 
 	var transform_coord_x = function(x) {
 		return x * w0 / width_total;
 	};
 	
+	var polyrect = function(x0, y0, w, h) {
+		var x1 = x0 + w;
+		var y1 = y0 + h;
+		return [x0, y0, x1, y0, x1, y1, x0, y1, x0, y0];
+	}
+	
+	var line_style = { color: '#f06', width: 1, linecap: 'round', linejoin: 'round' };
 	svg_drawing.clear();
-	svg_drawing.rect(w0, h0).move(x0, y0);
-
+	svg_drawing.polyline([x0, y0], [x1, y0], [x1, y1], [x0, y1], [x0, y0]).fill('none').stroke(line_style);
+	
 	for (i = 0; i< count; ++i) {
 		var marker1 = margin + i*(thickness + spacing);
 		var marker2 = marker1 + thickness;
-		var rx0 = transform_coord_x(marker1);
-		var ry0 = 10;
-		var rx1 = rx0 + transform_coord_x(thickness);
-		var ry1 = 70;
-		var polyline = svg_drawing.polyline([rx0, ry0], [rx1, ry0], [rx1, ry1], [rx0, ry1], [rx0, ry0]).fill('none').stroke({ width: 1 })
+		var polyline = svg_drawing.polyline(polyrect(transform_coord_x(marker1), 10, transform_coord_x(thickness), 60));
+		polyline.fill('none');
+		polyline.stroke(line_style);
 	}
 
 }
