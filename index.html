@@ -83,7 +83,7 @@ function update_calculation() {
 	
 	svg_drawing.clear();
 	
-	svg_drawing.polyline(polyrect(w0, h0))
+	svg_drawing.rect(w0, h0)
 		.move(x0, y0)
 		.fill(fill_style_single)
 		.stroke(line_style);
@@ -96,8 +96,14 @@ function update_calculation() {
 		var marker2 = marker1 + thickness;
 		$('#markers').append('<tr><td>'+(i+1)+'</td><td>'+marker1+'</td><td>'+marker2+'</td></tr>');
 
-		svg_drawing.polyline(polyrect(transform_coord_x(thickness), 70))
-			.move(x0 + transform_coord_x(marker1), 10)
+		var poly;
+		if (thickness == 0) {
+			poly = svg_drawing.polyline(polyrect(transform_coord_x(thickness), 70));
+		}
+		else {
+			poly = svg_drawing.line(0, 0, 0, 70));
+		}
+		poly.move(x0 + transform_coord_x(marker1), 10)
 			.fill(fill_style_board)
 			.stroke(line_style);
 
