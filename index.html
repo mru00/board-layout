@@ -15,7 +15,7 @@
       	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<style>
-		body { font-size: 80%; padding: 50%; }
+		body { margin: 80%; padding: 50%; }
 	</style>
 
 	<script type="text/javascript">
@@ -30,30 +30,28 @@ function preload_values() {
  	$("#spacing").val(35);
   	$("#margin").val(10);
 }
+function update_calculation() {
+	var thickness = + $("#thickness").val();
+	var count = + $("#count").val();
+	var spacing = + $("#spacing").val();
+	var margin = + $("#margin").val();
+  
+	$("#width_total").val( thickness * count + spacing * (count -1) + 2*margin );
+	$("#width_single").val(thickness + spacing );
+
+	$('#markers > tbody').empty();
+	var i;
+	for (i = 0; i< count; ++i) {
+		var marker1 = margin + i*(thickness + spacing);
+		var marker2 = marker1 + thickness;
+		$('#markers').append('<tr><td>'+(i+1)+' L</td><td>'+marker1+'</td></tr>');
+		$('#markers').append('<tr><td>'+(i+1)+' R</td><td>'+marker2+'</td></tr>');
+	}
+}
 
 $(function() {
-  
 	preload_values();
-
-	$(".target").change(function(){
-		var thickness = + $("#thickness").val();
-		var count = + $("#count").val();
-		var spacing = + $("#spacing").val();
-		var margin = + $("#margin").val();
-  
-  		$("#width_total").val( thickness * count + spacing * (count -1) + 2*margin );
-  		$("#width_single").val(thickness + spacing );
-
-		$('#markers > tbody').empty();
-		var i;
-		for (i = 0; i< count; ++i) {
-  			var marker1 = margin + i*(thickness + spacing);
-  			var marker2 = marker1 + thickness;
-			$('#markers').append('<tr><td>'+(i+1)+' L</td><td>'+marker1+'</td></tr>');
-			$('#markers').append('<tr><td>'+(i+1)+' R</td><td>'+marker2+'</td></tr>');
-		}
-
-	});
+	$(".target").change(update_calculation);
 });
 
 });
@@ -65,7 +63,10 @@ $(function() {
 <body>
 <div class="container">
 
-	<h1>Input</h1>
+	<h1>Calculate equidistant board layout</h1>
+	You want to lay out n boards with equal width and equal spacing?
+	
+	<h2>Input</h2>
 		
 	<div class="form-group row">
 		<label for="thickness" class="col-sm-2 col-form-label">thickness:</label>
@@ -91,8 +92,10 @@ $(function() {
     			<input type="number" class="form-control target" id="count">
    	 	</div>
   	</div>    
+	
+	<a class="btn btn-default" href="#" role="button" id="btn-update">Update</a>
     
-	<h1>Result</h1>
+	<h2>Result</h2>
 
 	<div class="form-group row">
 	  	<label for="width_total" class="col-sm-2 col-form-label">total width:</label>
@@ -107,7 +110,7 @@ $(function() {
    	 	</div>
   	</div>
 	
-	<h1>Markers</h1>
+	<h2>Markers</h2>
     
     	<table id="markers" class="table table-striped table-condensed" style="width:100%">
         	<thead>
@@ -116,7 +119,7 @@ $(function() {
         	<tbody></tbody>
      	</table>
     
-	<h1>About</h1>
+	<h2>About</h2>
 	
 	<a href="https://github.com/mru00/board-layout">Repository</a>
 </div>
