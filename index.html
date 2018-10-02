@@ -142,8 +142,16 @@ $(function() {
 	You want to lay out n boards with equal width and equal spacing?
 	
 	<h2>Input</h2>
-		
-	<div class="form-group row">
+	
+	<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#q_total">total width</a></li>
+  <li><a data-toggle="tab" href="#q_spacing">spacing</a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="q_total" class="tab-pane fade in active">
+
+	  	<div class="form-group row">
 		<label for="thickness" class="col-3 col-form-label">thickness:</label>
    		<div class="col-9">
 		        <input id="thickness" type="number" placeholder="thickness" class="form-control target" min="0">
@@ -199,6 +207,14 @@ $(function() {
     			<input type="number" class="form-control" id="width_total" readonly>
    	 	</div>
   	</div>
+
+	  
+	</div>
+  <div id="q_spacing" class="tab-pane fade">
+  </div>
+</div>
+	
+	
 
 	<div id="drawing" class="center-block"></div>
 
