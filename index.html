@@ -77,7 +77,7 @@ function update_calculation() {
 	for (i = 0; i< count; ++i) {
 		var marker1 = margin + i*(thickness + spacing);
 		var polyline = svg_drawing.polyline(polyrect(transform_coord_x(thickness), 70));
-		polyline.move(transform_coord_x(marker1), 10);
+		polyline.move(x0 + transform_coord_x(marker1), 10);
 		polyline.fill('none');
 		polyline.stroke(line_style);
 	}
