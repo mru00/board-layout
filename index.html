@@ -40,31 +40,31 @@ function preload_values() {
 	var width_total = 1;
 	var mode = "total";
 	if (typeof(Storage) !== "undefined") {
- 		thickness = + localStorage.thickness;
- 		count = + localStorage.count;
- 		spacing = + localStorage.spacing;
- 		margin = + localStorage.margin;
-		width_total = + localStorage.width_total;
+ 		thickness = + (localStorage.thickness || 0);
+ 		count = + (localStorage.count || 0);
+ 		spacing = + (localStorage.spacing || 0);
+ 		margin = + (localStorage.margin || 0);
+		width_total = + (localStorage.width_total || 0);
 		mode = localStorage.mode || "total";
 	}
 	$("#thickness").val(thickness);
 	$("#count").val(count);
- 	$("#spacing").val(spacing);
+ 	$("#inp-spacing").val(spacing);
   	$("#margin").val(margin);
-  	$("#width_total").val(width_total);
+  	$("#inp-width_total").val(width_total);
 }
 	     	
 function update_calculation() {
 
 	var thickness = + $("#thickness").val();
 	var count = + $("#count").val();
-	var spacing = + $("#spacing").val();
+	var spacing = + $("#inp-spacing").val();
 	var margin = + $("#margin").val();
-	var width_total = + $("#width_total").val();
+	var width_total = + $("#inp-width_total").val();
 	
 	if (mode == "total") {
 		width_total = thickness * count + spacing * (count -1) + 2*margin;
-		$("#width_total").val( width_total );
+		$("#inp-width_total").val( width_total );
 	}
 	else if (mode == "spacing") {
 		spacing = (width_total - 2*margin - count*thickness) / (count -1);
@@ -129,22 +129,22 @@ function update_calculation() {
 
 }
 
-	function spacing_1_1() { $("#spacing").val($("#thickness").val()); update_calculation(); }
-	function spacing_2_1() { $("#spacing").val($("#thickness").val()/2); update_calculation(); }
-	function margin_1_1() { $("#margin").val($("#spacing").val()); update_calculation(); }
-	function margin_2_1() { $("#margin").val($("#spacing").val()/2); update_calculation(); }
+	function spacing_1_1() { $("#inp-spacing").val($("#thickness").val()); update_calculation(); }
+	function spacing_2_1() { $("#inp-spacing").val($("#thickness").val()/2); update_calculation(); }
+	function margin_1_1() { $("#margin").val($("#inp-spacing").val()); update_calculation(); }
+	function margin_2_1() { $("#margin").val($("#inp-spacing").val()/2); update_calculation(); }
 
 	function set_mode_spacing() {
 		mode = "spacing"; 
-		$("#spacing").attr("readonly", false); 
-		$("#width_total").attr("readonly", true); 
+		$("#inp-spacing").attr("readonly", true); 
+		$("#inp-width_total").attr("readonly", false); 
 		update_calculation();
 	}
 
 	function set_mode_total() {
 		mode = "total"; 
-		$("#spacing").attr("readonly", true); 
-		$("#width_total").attr("readonly", false); 
+		$("#inp-spacing").attr("readonly", false); 
+		$("#inp-width_total").attr("readonly", true); 
 		update_calculation();
 	}
 
@@ -172,8 +172,9 @@ $(function() {
 <div class="container">
 
 	<h1>Calculate equidistant board layout</h1>
+	<div>
 	You want to lay out n boards with equal width and equal spacing?
-
+	</div>
 	
 <div class="btn-group btn-group-toggle" data-toggle="buttons">
   <label class="btn btn-secondary active">
@@ -185,12 +186,12 @@ $(function() {
 </div>
 
 
-
-	<h2>Input</h2>
-	
 	<div class="float-right">
 		<button type="button" class="btn btn-primary d-print-none" id="btn-update">Update</button>
 	</div>
+
+	<h2>Input</h2>
+	
 	
 
 	<div class="form-group row">
@@ -200,10 +201,10 @@ $(function() {
    	 	</div>
   	</div>
 	<div class="form-group row">
-    		<label for="spacing" class="col-3 col-form-label">spacing:</label>
+    		<label for="inp-spacing" class="col-3 col-form-label">spacing:</label>
 
 		<div class="input-group col-9">
-			<input type="number" class="form-control target" placeholder="spacing" id="spacing"  min="0">
+			<input type="number" class="form-control target" id="inp-spacing" min="0">
   			<div class="input-group-append">
     				<button class="btn btn-outline-secondary" type="button" id="spacing_1_1">1:1</button>
     				<button class="btn btn-outline-secondary" type="button" id="spacing_2_1">2:1</button>
@@ -239,9 +240,9 @@ $(function() {
    	 	</div>
   	</div>
 	<div class="form-group row">
-	  	<label for="width_total" class="col-3 col-form-label">total width:</label>
+	  	<label for="inp-width_total" class="col-3 col-form-label">total width:</label>
 		<div class="col-9">
-    			<input type="number" class="form-control" id="width_total" readonly>
+    			<input type="number" class="form-control target" id="inp-width_total" readonly>
    	 	</div>
   	</div>
 	
