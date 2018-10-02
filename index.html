@@ -68,6 +68,7 @@ function update_calculation() {
 	var h0 = 50;
 	var x0 = svg_width * 0.05;
 	var y0 = 20;
+	var board_h = 70;
 
 	var transform_coord_x = function(x) {
 		return x * w0 / width_total;
@@ -98,13 +99,13 @@ function update_calculation() {
 
 		var poly;
 		if (thickness == 0) {
-			poly = svg_drawing.polyline(polyrect(transform_coord_x(thickness), 70));
+			poly = svg_drawing.rect(transform_coord_x(thickness), board_h);
+			poly.fill(fill_style_board);
 		}
 		else {
-			poly = svg_drawing.line(0, 0, 0, 70);
+			poly = svg_drawing.line(0, 0, 0, board_h);
 		}
 		poly.move(x0 + transform_coord_x(marker1), 10)
-			.fill(fill_style_board)
 			.stroke(line_style);
 
 	}
