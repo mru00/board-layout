@@ -6,13 +6,9 @@
   	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-  	<script type="text/javascript" src="//code.jquery.com/jquery-git.js"></script>
-      	<script type="text/javascript" src="//code.jquery.com/jquery-3.3.1.slim.min.js"></script>
       	<link rel="stylesheet" type="text/css" href="//stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-      	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-      	<script type="text/javascript" src="//stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
       	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 	<style>
 	</style>
@@ -51,6 +47,7 @@ function update_calculation() {
 $(function() {
 	preload_values();
 	$(".target").change(update_calculation);
+	$("#btn-update").click(update_calculation);
 });
 
 });
@@ -92,7 +89,7 @@ $(function() {
    	 	</div>
   	</div>    
 	
-	<a class="btn btn-default" href="#" role="button" id="btn-update">Update</a>
+	<button type="button" class="btn btn-primary" id="btn-update">Update</button>
     
 	<h2>Result</h2>
 
@@ -121,5 +118,14 @@ $(function() {
 	<h2>About</h2>
 	
 	<a href="https://github.com/mru00/board-layout">Repository</a>
-</div>
-</body>
+
+	
+	</div>
+  	<script type="text/javascript" src="//code.jquery.com/jquery-git.js"></script>
+      	<script type="text/javascript" src="//code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+      	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+      	<script type="text/javascript" src="//stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+	
+	</body>
+</html>
