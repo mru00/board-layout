@@ -142,26 +142,22 @@ $(function() {
 	You want to lay out n boards with equal width and equal spacing?
 
 	
-	<ul class="nav nav-tabs">
-		<li class="nav-item active"><a data-toggle="tab" href="#q_total">total width</a></li>
-		<li class="nav-item"><a data-toggle="tab" href="#q_spacing">spacing</a></li>
-	</ul>
-
-	<div class="tab-content">
-		<div id="q_total" class="tab-pane fade in active">
-		</div>
- 	 	
-		<div id="q_spacing" class="tab-pane fade">
-  		</div>
-	</div>
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+  <label class="btn btn-secondary active">
+    <input type="radio" name="options" id="btn-mode-total" autocomplete="off" checked> Total
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="options" id="btn-mode-spacing" autocomplete="off"> Spacing
+  </label>
+</div>
 
 
-	<div class="float-right">
-		<button type="button" class="btn btn-primary d-print-none" id="btn-update">Update</button>
-	</div>
 
 	<h2>Input</h2>
 	
+	<div class="float-right">
+		<button type="button" class="btn btn-primary d-print-none" id="btn-update">Update</button>
+	</div>
 	
 
 	<div class="form-group row">
