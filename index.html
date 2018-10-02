@@ -86,46 +86,56 @@ $(function() {
 <div class="row">
 input
 </div>
-  <div class="form-group">
-    <label for="thickness" class="col-md-1">thickness:</label>
-      <div class="col-md-8">
-        <input id="thickness" name="thickness" type="number" placeholder="thickness" class="form-control input-md target">
-            </div>
-    <label for="spacing">spacing:</label>
-    <input type="number" class="form-control target" id="spacing">
-    
-    <label for="margin">margin:</label>
-    <input type="number" class="form-control target" id="margin">
-    
-    <label for="count">count:</label>
-    <input type="number" class="form-control target" id="count">
+	<div class="form-group row">
+		<label for="thickness" class="col-sm-2 col-form-label">thickness:</label>
+   		<div class="col-sm-10">
+		        <input id="thickness" type="number" placeholder="thickness" class="form-control target">
+   	 	</div>
+  	</div>
+	<div class="form-group row">
+    		<label for="spacing" class="col-sm-2 col-form-label">spacing:</label>
+   		<div class="col-sm-10">
+    			<input type="number" class="form-control target" id="spacing">
+   	 	</div>
+  	</div>
+	<div class="form-group row">
+    		<label for="margin" class="col-sm-2 col-form-label">margin:</label>
+   		<div class="col-sm-10">
+	    		<input type="number" class="form-control target" id="margin">
+   	 	</div>
+  	</div>
+	<div class="form-group row">
+    		<label for="count" class="col-sm-2 col-form-label">count:</label>
+   		<div class="col-sm-10">
+    			<input type="number" class="form-control target" id="count">
+   	 	</div>
+  	</div>    
     
     <!--   -->
 
-<div class="row">
-result
-</div>
-    <label for="width_total">total width:</label>
-    <input type="number" class="form-control" id="width_total">
+	<div class="row">result</div>
 
-    <label for="width_single">width board+spacing:</label>
-    <input type="number" class="form-control" id="width_single">
-
-<div class="row">
-markers
-</div>
+	<div class="form-group row">
+	  	<label for="width_total" class="col-sm-2 col-form-label">total width:</label>
+		<div class="col-sm-10">
+    			<input type="number" class="form-control" id="width_total">
+   	 	</div>
+  	</div>
+	<div class="form-group row">
+    		<label for="width_single" class="col-sm-2 col-form-label">width board+spacing:</label>
+   		<div class="col-sm-10">
+    			<input type="number" class="form-control" id="width_single">
+   	 	</div>
+  	</div>
+	
+	<div class="row">markers</div>
     
+    	<table id="markers" class="table table-striped table-bordered" style="width:100%">
+        	<thead>
+            		<tr><th>No.</th><th>Position</th></tr>
+        	</thead>
+        	<tbody></tbody>
+     	</table>
     
-    <table id="markers" class="table table-striped table-bordered" style="width:100%">
-        <thead>
-            <tr>
-                <th>No.</th>
-                <th>Position</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-     </table>
-    
-  </div>
 </div>
 </body>
