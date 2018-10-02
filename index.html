@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>bretter</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="//code.jquery.com/jquery-git.js"
+    
+  ></script>
+  
+      <script type="text/javascript" src="//code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="//stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+      <script type="text/javascript" src="//stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+.row {
+  background: #f8f9fa;
+  margin-top: 20px;
+}
+
+.col {
+  border: solid 1px #6c757d;
+  padding: 10px;
+}
+</style>
+
+  <script type="text/javascript">
+
+
+    $(window).on('load', function() {
+      
+function preload_values() {
+	"use strict";
+  $("#thickness").val(55);
+ 	$("#count").val(9);
+ 	$("#spacing").val(35);
+  $("#margin").val(10);
+}
+
+
+$(function() {
+	"use strict";
+  
+	preload_values();
+
+	$(".target").change(function(){
+  var thickness = + $("#thickness").val();
+  var count = + $("#count").val();
+  var spacing = + $("#spacing").val();
+  var margin = + $("#margin").val();
+  
+  
+  $("#width_total").val( thickness * count + spacing * (count -1) + 2*margin );
+  $("#width_single").val(thickness + spacing );
+
+	$('#markers > tbody').empty();
+	var i;
+	for (i = 0; i< count; ++i) {
+  	var marker1 = margin + i*(thickness + spacing);
+  	var marker2 = marker1 + thickness;
+		$('#markers').append('<tr><td>L'+(i+1)+'</td><td>'+marker1+'</td></tr>');
+		$('#markers').append('<tr><td>R'+(i+1)+'</td><td>'+marker2+'</td></tr>');
+	}
+
+});
+});
+
+    });
+
+</script>
+
+</head>
+
+<body>
+<div class="container">
+
+<div class="row">
+input
+</div>
+  <div class="form-group">
+    <label for="thickness" class="col-md-1">thickness:</label>
+      <div class="col-md-8">
+        <input id="thickness" name="thickness" type="number" placeholder="thickness" class="form-control input-md target">
+            </div>
+    <label for="spacing">spacing:</label>
+    <input type="number" class="form-control target" id="spacing">
+    
+    <label for="margin">margin:</label>
+    <input type="number" class="form-control target" id="margin">
+    
+    <label for="count">count:</label>
+    <input type="number" class="form-control target" id="count">
+    
+    <!--   -->
+
+<div class="row">
+result
+</div>
+    <label for="width_total">total width:</label>
+    <input type="number" class="form-control" id="width_total">
+
+    <label for="width_single">width board+spacing:</label>
+    <input type="number" class="form-control" id="width_single">
+
+<div class="row">
+markers
+</div>
+    
+    
+    <table id="markers" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Position</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+     </table>
+    
+  </div>
+</div>
+</body>
