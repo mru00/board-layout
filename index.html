@@ -21,6 +21,9 @@
 
 	<script type="text/javascript">
       $(document).ready(function() {
+	      
+var svg_drawing;	      
+	      
 function preload_values() {
 	"use strict";
   	$("#thickness").val(55);
@@ -35,9 +38,12 @@ function update_calculation() {
 	var count = + $("#count").val();
 	var spacing = + $("#spacing").val();
 	var margin = + $("#margin").val();
+	
+	var width_total = thickness * count + spacing * (count -1) + 2*margin;
+	var width_single = thickness + spacing;
   
-	$("#width_total").val( thickness * count + spacing * (count -1) + 2*margin );
-	$("#width_single").val(thickness + spacing );
+	$("#width_total").val( width_total );
+	$("#width_single").val( width_single );
 
 	$('#markers > tbody').empty();
 	var i;
@@ -47,6 +53,25 @@ function update_calculation() {
 		$('#markers').append('<tr><td>'+(i+1)+' L</td><td>'+marker1+'</td></tr>');
 		$('#markers').append('<tr><td>'+(i+1)+' R</td><td>'+marker2+'</td></tr>');
 	}
+
+	
+	var w0 = 300;
+	var h0 = 50;
+	var x0 = 10;
+	var y0 = 20;
+
+	var transform_coord_x = function(x) {
+		return x * w0 / width_total;
+	};
+	
+	svg_drawing.rect(w0, h0).move(x0, y0);
+
+	for (i = 0; i< count; ++i) {
+		var marker1 = margin + i*(thickness + spacing);
+		var marker2 = marker1 + thickness;
+		svg_drawing.rect(transform_coord_x(thickness), 70).move(transform_coord_x(marker1), 10)
+	}
+
 }
 
 $(function() {
@@ -56,8 +81,7 @@ $(function() {
 	$(".target").change(update_calculation);
 	$("#btn-update").click(update_calculation);
 	
-	var draw = SVG('drawing').size(300, 100)
-	var rect = draw.rect(100, 100).attr({ fill: '#f06' })
+	svg_drawing = SVG('drawing').size(300, 100)
 });
 });
 	</script>
