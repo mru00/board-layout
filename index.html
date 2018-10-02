@@ -69,7 +69,11 @@ function update_calculation() {
 	for (i = 0; i< count; ++i) {
 		var marker1 = margin + i*(thickness + spacing);
 		var marker2 = marker1 + thickness;
-		svg_drawing.rect(transform_coord_x(thickness), 70).move(transform_coord_x(marker1), 10)
+		var rx0 = transform_coord_x(marker1);
+		var ry0 = 10;
+		var rx1 = rx0 + transform_coord_x(thickness);
+		var ry1 = 70;
+		var polyline = svg_drawing.polyline([rx0, ry0], [rx1, ry0], [rx1, ry1], [rx0, ry1], [rx0, ry0]).fill('none').stroke({ width: 1 })
 	}
 
 }
