@@ -76,12 +76,12 @@ function update_calculation() {
 
 $(function() {
 "use strict";
+	svg_drawing = SVG('drawing').size(300, 100)
 	preload_values();
 	update_calculation();
 	$(".target").change(update_calculation);
 	$("#btn-update").click(update_calculation);
 	
-	svg_drawing = SVG('drawing').size(300, 100)
 });
 });
 	</script>
