@@ -50,13 +50,10 @@ function preload_values() {
 	     
 	
 	
-	function spacing_1_1() {
-	 	$("#spacing").val($("#thickness").val());	
-	}
-
-	function spacing_2_1() {
-	 	$("#spacing").val($("#thickness").val()/2);		
-	}
+	function spacing_1_1() { $("#spacing").val($("#thickness").val()); }
+	function spacing_2_1() { $("#spacing").val($("#thickness").val()/2); }
+	function margin_1_1() { $("#margin").val($("#spacing").val()); }
+	function margin_2_1() { $("#margin").val($("#spacing").val()/2); }
 	
 	
 function update_calculation() {
@@ -133,6 +130,8 @@ $(function() {
 	$("#btn-update").click(update_calculation);
 	$("#spacing_1_1").click(spacing_1_1);
 	$("#spacing_2_1").click(spacing_2_1);
+	$("#margin_1_1").click(margin_1_1);
+	$("#margin_2_1").click(margin_2_1);
 });
 });
 	</script>
@@ -151,14 +150,14 @@ $(function() {
 	<div class="form-group row">
 		<label for="thickness" class="col-3 col-form-label">thickness:</label>
    		<div class="col-9">
-		        <input id="thickness" type="number" placeholder="thickness" class="form-control target">
+		        <input id="thickness" type="number" placeholder="thickness" class="form-control target" min="0">
    	 	</div>
   	</div>
 	<div class="form-group row">
     		<label for="spacing" class="col-3 col-form-label">spacing:</label>
 
 		<div class="input-group col-9">
-			<input type="number" class="form-control target" placeholder="spacing" id="spacing">
+			<input type="number" class="form-control target" placeholder="spacing" id="spacing"  min="0">
   			<div class="input-group-append">
     				<button class="btn btn-outline-secondary" type="button" id="spacing_1_1">1:1</button>
     				<button class="btn btn-outline-secondary" type="button" id="spacing_2_1">2:1</button>
@@ -171,13 +170,20 @@ $(function() {
 	<div class="form-group row">
     		<label for="margin" class="col-3 col-form-label">margin:</label>
    		<div class="col-9">
-	    		<input type="number" class="form-control target" id="margin">
    	 	</div>
-  	</div>
+		<div class="input-group col-9">
+	    		<input type="number" class="form-control target" id="margin" min="0">
+  			<div class="input-group-append">
+    				<button class="btn btn-outline-secondary" type="button" id="margin_1_1">1:1</button>
+    				<button class="btn btn-outline-secondary" type="button" id="margin_2_1">2:1</button>
+  			</div>
+		</div>
+
+	</div>
 	<div class="form-group row">
     		<label for="count" class="col-3 col-form-label">count:</label>
    		<div class="col-9">
-    			<input type="number" class="form-control target" id="count">
+    			<input type="number" class="form-control target" id="count" min="0">
    	 	</div>
   	</div>    
 	
