@@ -66,20 +66,19 @@ function update_calculation() {
 		return x * w0 / width_total;
 	};
 	
-	var polyrect = function(x0, y0, w, h) {
-		var x1 = x0 + w;
-		var y1 = y0 + h;
-		return [x0, y0, x1, y0, x1, y1, x0, y1, x0, y0];
+	var polyrect = function(w, h) {
+		return [0, 0, w, 0, w, h, 0, h, w, 0];
 	}
 	
 	var line_style = { color: '#f06', width: 1, linecap: 'round', linejoin: 'round' };
 	svg_drawing.clear();
-	svg_drawing.polyline([x0, y0], [x1, y0], [x1, y1], [x0, y1], [x0, y0]).fill('none').stroke(line_style);
+	
+	svg_drawing.polyline(polyrect(x0, y0)).move(x0, y0).fill('none').stroke(line_style);
 	
 	for (i = 0; i< count; ++i) {
 		var marker1 = margin + i*(thickness + spacing);
-		var marker2 = marker1 + thickness;
-		var polyline = svg_drawing.polyline(polyrect(transform_coord_x(marker1), 10, transform_coord_x(thickness), 60));
+		var polyline = svg_drawing.polyline(polyrect(transform_coord_x(thickness), 60));
+		polyline.move(transform_coord_x(marker1), 10);
 		polyline.fill('none');
 		polyline.stroke(line_style);
 	}
