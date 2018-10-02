@@ -54,11 +54,11 @@ function update_calculation() {
 		$('#markers').append('<tr><td>'+(i+1)+' R</td><td>'+marker2+'</td></tr>');
 	}
 
-	
-	var w0 = 250;
+	var svg_width = svg_drawing.viewbox().width;
+	var w0 = svg_width * 0.9;
 	var h0 = 50;
 	var x0 = 10;
-	var y0 = 20;
+	var y0 = svg_width * 0.05;
 
 	var transform_coord_x = function(x) {
 		return x * w0 / width_total;
@@ -88,7 +88,7 @@ function update_calculation() {
 
 $(function() {
 "use strict";
-	svg_drawing = SVG('drawing').size(300, 100)
+	svg_drawing = SVG('drawing').size('100%', 100)
 	preload_values();
 	update_calculation();
 	$(".target").change(update_calculation);
