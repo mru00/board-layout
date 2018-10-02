@@ -25,9 +25,10 @@
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.6/svg.min.js"></script>
 
 	<script type="text/javascript">
-      $(document).ready(function() {
+$(document).ready(function() {
+	"use strict";
 	      
-var svg_drawing;	      
+	var svg_drawing;	      
 	      
 function preload_values() {
 	"use strict";
@@ -46,9 +47,19 @@ function preload_values() {
  	$("#spacing").val(spacing);
   	$("#margin").val(margin);
 }
+	     
+	
+	
+	function spacing_1_1() {
+	 	$("#spacing").val($("#thickness").val());	
+	}
 
+	function spacing_2_1() {
+	 	$("#spacing").val($("#thickness").val()/2);		
+	}
+	
+	
 function update_calculation() {
-	"use strict";
 	var thickness = + $("#thickness").val();
 	var count = + $("#count").val();
 	var spacing = + $("#spacing").val();
@@ -78,11 +89,7 @@ function update_calculation() {
 	var transform_coord_x = function(x) {
 		return x * w0 / width_total;
 	};
-	
-	var polyrect = function(w, h) {
-		return [0, 0,    w, 0,    w, h,     0, h,    0, 0];
-	}
-	
+		
 	var line_style = { color: 'black', width: 1, linecap: 'round', linejoin: 'round' };
 	var fill_style_board = 'BurlyWood';
 	var fill_style_single = 'NavajoWhite';
@@ -124,7 +131,8 @@ $(function() {
 	update_calculation();
 	$(".target").change(update_calculation);
 	$("#btn-update").click(update_calculation);
-	
+	$("#spacing_1_1").click(spacing_1_1);
+	$("#spacing_2_1").click(spacing_2_1);
 });
 });
 	</script>
@@ -148,10 +156,18 @@ $(function() {
   	</div>
 	<div class="form-group row">
     		<label for="spacing" class="col-3 col-form-label">spacing:</label>
-   		<div class="col-9">
-    			<input type="number" class="form-control target" id="spacing">
-   	 	</div>
+
+		<div class="input-group col-9">
+			<input type="number" class="form-control target" placeholder="spacing" id="spacing">
+  			<div class="input-group-append">
+    				<button class="btn btn-outline-secondary" type="button" id="spacing_1_1">1:1</button>
+    				<button class="btn btn-outline-secondary" type="button" id="spacing_2_1">2:1</button>
+  			</div>
+		</div>
   	</div>
+	
+	
+	
 	<div class="form-group row">
     		<label for="margin" class="col-3 col-form-label">margin:</label>
    		<div class="col-9">
