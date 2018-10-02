@@ -26,10 +26,20 @@ var svg_drawing;
 	      
 function preload_values() {
 	"use strict";
-  	$("#thickness").val(55);
- 	$("#count").val(9);
- 	$("#spacing").val(35);
-  	$("#margin").val(10);
+	var thickness = 55;
+	var count = 9;
+	var spacing = 35;
+	var margin = 10;
+	if (typeof(Storage) !== "undefined") {
+ 		thickness = + localStorage.thickness;
+ 		count = + localStorage.count;
+ 		spacing = + localStorage.spacing;
+ 		margin = + localStorage.margin;
+	}
+	$("#thickness").val(thickness);
+	$("#count").val(count);
+ 	$("#spacing").val(spacing);
+  	$("#margin").val(margin);
 }
 
 function update_calculation() {
@@ -38,6 +48,13 @@ function update_calculation() {
 	var count = + $("#count").val();
 	var spacing = + $("#spacing").val();
 	var margin = + $("#margin").val();
+	
+	if (typeof(Storage) !== "undefined") {
+ 		localStorage.thickness = thickness;
+ 		localStorage.count = count;
+ 		localStorage.spacing = spacing;
+ 		localStorage.margin = margin;
+	}
 	
 	var width_total = thickness * count + spacing * (count -1) + 2*margin;
 	var width_single = thickness + spacing;
