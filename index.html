@@ -47,15 +47,7 @@ function preload_values() {
  	$("#spacing").val(spacing);
   	$("#margin").val(margin);
 }
-	     
-	
-	
-	function spacing_1_1() { $("#spacing").val($("#thickness").val()); }
-	function spacing_2_1() { $("#spacing").val($("#thickness").val()/2); }
-	function margin_1_1() { $("#margin").val($("#spacing").val()); }
-	function margin_2_1() { $("#margin").val($("#spacing").val()/2); }
-	
-	
+	     	
 function update_calculation() {
 	var thickness = + $("#thickness").val();
 	var count = + $("#count").val();
@@ -121,8 +113,12 @@ function update_calculation() {
 
 }
 
+	function spacing_1_1() { $("#spacing").val($("#thickness").val()); update_calculation(); }
+	function spacing_2_1() { $("#spacing").val($("#thickness").val()/2); update_calculation(); }
+	function margin_1_1() { $("#margin").val($("#spacing").val()); update_calculation(); }
+	function margin_2_1() { $("#margin").val($("#spacing").val()/2); update_calculation(); }
+
 $(function() {
-"use strict";
 	svg_drawing = SVG('drawing').size('100%', 100)
 	preload_values();
 	update_calculation();
