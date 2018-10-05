@@ -31,21 +31,21 @@ $(document).ready(function() {
 	var svg_drawing;	      
 	var mode = "total";
 	      
-function get_local_storage_w_default(key, def) {
+function get_local_storage_w_default(key, def, cast) {
 	if (typeof(Storage) !== "undefined" && key in localStorage) {
-		return localStorage[key];
+		return cast? cast(localStorage[key]): localStorage[key];
 	}
 	return def;
 }
 	
 function preload_values() {
 	"use strict";
-	$("#inp-width_element").val(get_local_storage_w_default("width_element", 55));
-	$("#inp-width_total").val(get_local_storage_w_default("width_total", 55));
-	$("#inp-count").val(get_local_storage_w_default("count", 9));
- 	$("#inp-spacing").val(get_local_storage_w_default("spacing", 1));
-  	$("#inp-margin").val(get_local_storage_w_default("margin", 1));
-  	$("#inp-width_total").val(get_local_storage_w_default("width_total", 0));
+	$("#inp-width_element").val(get_local_storage_w_default("width_element", 55, Number));
+	$("#inp-width_total").val(get_local_storage_w_default("width_total", 55, Number));
+	$("#inp-count").val(get_local_storage_w_default("count", 9, Number));
+ 	$("#inp-spacing").val(get_local_storage_w_default("spacing", 1, Number));
+  	$("#inp-margin").val(get_local_storage_w_default("margin", 1, Number));
+  	$("#inp-width_total").val(get_local_storage_w_default("width_total", 0, Number));
 }
 	     	
 function update_calculation() {
@@ -191,7 +191,7 @@ $(function() {
 	<div class="form-group row">
 		<label for="inp-width_element" class="col-3 col-form-label">element width:</label>
    		<div class="col-9">
-		        <input id="width_element" type="number" class="form-control target" min="0">
+		        <input id="inp-width_element" type="number" class="form-control target" min="0">
    	 	</div>
   	</div>
 	<div class="form-group row">
