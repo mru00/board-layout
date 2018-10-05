@@ -2,7 +2,7 @@
 <html>
 <head>
   	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  	<title>board layout</title>
+  	<title>element layout</title>
   	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -31,48 +31,42 @@ $(document).ready(function() {
 	var svg_drawing;	      
 	var mode = "total";
 	      
+function get_local_storage_w_default(key, def) {
+	if (typeof(Storage) !== "undefined" && key in localStorage) {
+		return localStorage[key];
+	}
+	return def;
+}
+	
 function preload_values() {
 	"use strict";
-	var thickness = 55;
-	var count = 9;
-	var spacing = 35;
-	var margin = 10;
-	var width_total = 1;
-	var mode = "total";
-	if (typeof(Storage) !== "undefined") {
- 		thickness = + (localStorage.thickness || 0);
- 		count = + (localStorage.count || 0);
- 		spacing = + (localStorage.spacing || 0);
- 		margin = + (localStorage.margin || 0);
-		width_total = + (localStorage.width_total || 0);
-		mode = localStorage.mode || "total";
-	}
-	$("#thickness").val(thickness);
-	$("#count").val(count);
- 	$("#inp-spacing").val(spacing);
-  	$("#margin").val(margin);
-  	$("#inp-width_total").val(width_total);
+	$("#inp-width_element").val(get_local_storage_w_default("width_element", 55));
+	$("#inp-width_total").val(get_local_storage_w_default("width_total", 55));
+	$("#inp-count").val(get_local_storage_w_default("count", 9));
+ 	$("#inp-spacing").val(get_local_storage_w_default("spacing", 1));
+  	$("#inp-margin").val(get_local_storage_w_default("margin", 1));
+  	$("#inp-width_total").val(get_local_storage_w_default("width_total", 0));
 }
 	     	
 function update_calculation() {
 
-	var thickness = + $("#thickness").val();
-	var count = + $("#count").val();
+	var width_element = + $("#inp-width_element").val();
+	var count = + $("#inp-count").val();
 	var spacing = + $("#inp-spacing").val();
-	var margin = + $("#margin").val();
+	var margin = + $("#inp-margin").val();
 	var width_total = + $("#inp-width_total").val();
 	
 	if (mode == "total") {
-		width_total = thickness * count + spacing * (count -1) + 2*margin;
+		width_total = width_element * count + spacing * (count -1) + 2*margin;
 		$("#inp-width_total").val( width_total );
 	}
 	else if (mode == "spacing") {
-		spacing = (width_total - 2*margin - count*thickness) / (count -1);
+		spacing = (width_total - 2*margin - count*width_element) / (count -1);
 		$("#inp-spacing").val(spacing);
 	}
 	
 	if (typeof(Storage) !== "undefined") {
- 		localStorage.thickness = thickness;
+ 		localStorage.width_element = width_element;
  		localStorage.count = count;
  		localStorage.spacing = spacing;
  		localStorage.margin = margin;
@@ -80,9 +74,8 @@ function update_calculation() {
  		localStorage.mode = mode;
 	}
 	
-	var width_single = thickness + spacing;
-
-	$("#width_single").val( width_single );
+	var width_w_spacing = width_element + spacing;
+	$("#width_w_spacing").val( width_w_spacing );
 
 
 	var svg_width = svg_drawing.viewbox().width;
@@ -111,13 +104,13 @@ function update_calculation() {
 	
 	var i;
 	for (i = 0; i< count; ++i) {
-		var marker1 = margin + i*(thickness + spacing);
-		var marker2 = marker1 + thickness;
+		var marker1 = margin + i*(width_element + spacing);
+		var marker2 = marker1 + width_element;
 		$('#markers').append('<tr><td>'+(i+1)+'</td><td>'+marker1+'</td><td>'+marker2+'</td></tr>');
 
 		var poly;
-		if (thickness != 0) {
-			poly = svg_drawing.rect(transform_coord_x(thickness), board_h);
+		if (width_element != 0) {
+			poly = svg_drawing.rect(transform_coord_x(width_element), board_h);
 			poly.fill(fill_style_board);
 		}
 		else {
@@ -130,10 +123,10 @@ function update_calculation() {
 
 }
 
-	function spacing_1_1() { $("#inp-spacing").val($("#thickness").val()); update_calculation(); }
-	function spacing_2_1() { $("#inp-spacing").val($("#thickness").val()/2); update_calculation(); }
-	function margin_1_1() { $("#margin").val($("#inp-spacing").val()); update_calculation(); }
-	function margin_2_1() { $("#margin").val($("#inp-spacing").val()/2); update_calculation(); }
+	function spacing_1_1() { $("#inp-spacing").val($("#inp-width_element").val()); update_calculation(); }
+	function spacing_2_1() { $("#inp-spacing").val($("#inp-width_element").val()/2); update_calculation(); }
+	function margin_1_1() { $("#inp-margin").val($("#inp-spacing").val()); update_calculation(); }
+	function margin_2_1() { $("#inp-margin").val($("#inp-spacing").val()/2); update_calculation(); }
 
 	function set_mode_spacing() {
 		mode = "spacing"; 
@@ -156,10 +149,10 @@ $(function() {
 	update_calculation();
 	$(".target").change(update_calculation);
 	$("#btn-update").click(update_calculation);
-	$("#spacing_1_1").click(spacing_1_1);
-	$("#spacing_2_1").click(spacing_2_1);
-	$("#margin_1_1").click(margin_1_1);
-	$("#margin_2_1").click(margin_2_1);
+	$("#btn-spacing_1_1").click(spacing_1_1);
+	$("#btn-spacing_2_1").click(spacing_2_1);
+	$("#btn-margin_1_1").click(margin_1_1);
+	$("#btn-margin_2_1").click(margin_2_1);
 	$("#btn-mode-total").change(set_mode_total);
 	$("#btn-mode-spacing").change(set_mode_spacing);
 });
@@ -172,9 +165,9 @@ $(function() {
 <body>
 <div class="container">
 
-	<h1>Calculate equidistant board layout</h1>
+	<h1>Calculate equidistant element layout</h1>
 	<div>
-	You want to lay out n boards with equal width and equal spacing?
+	You want to lay out N elements with equal width and equal spacing?
 	</div>
 	
 <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -196,9 +189,9 @@ $(function() {
 	
 
 	<div class="form-group row">
-		<label for="thickness" class="col-3 col-form-label">thickness:</label>
+		<label for="inp-width_element" class="col-3 col-form-label">element width:</label>
    		<div class="col-9">
-		        <input id="thickness" type="number" placeholder="thickness" class="form-control target" min="0">
+		        <input id="width_element" type="number" class="form-control target" min="0">
    	 	</div>
   	</div>
 	<div class="form-group row">
@@ -207,8 +200,8 @@ $(function() {
 		<div class="input-group col-9">
 			<input type="number" class="form-control target" id="inp-spacing" min="0">
   			<div class="input-group-append">
-    				<button class="btn btn-outline-secondary" type="button" id="spacing_1_1">1:1</button>
-    				<button class="btn btn-outline-secondary" type="button" id="spacing_2_1">2:1</button>
+    				<button class="btn btn-outline-secondary" type="button" id="btn-spacing_1_1">1:1</button>
+    				<button class="btn btn-outline-secondary" type="button" id="btn-spacing_2_1">2:1</button>
   			</div>
 		</div>
   	</div>
@@ -216,28 +209,28 @@ $(function() {
 	
 	
 	<div class="form-group row">
-    		<label for="margin" class="col-3 col-form-label">margin:</label>
+    		<label for="inp-margin" class="col-3 col-form-label">margin:</label>
 		<div class="input-group col-9">
-	    		<input type="number" class="form-control target" id="margin" min="0">
+	    		<input type="number" class="form-control target" id="inp-margin" min="0">
   			<div class="input-group-append">
-    				<button class="btn btn-outline-secondary" type="button" id="margin_1_1">1:1</button>
-    				<button class="btn btn-outline-secondary" type="button" id="margin_2_1">2:1</button>
+    				<button class="btn btn-outline-secondary" type="button" id="btn-margin_1_1">1:1</button>
+    				<button class="btn btn-outline-secondary" type="button" id="btn-margin_2_1">2:1</button>
   			</div>
 		</div>
 
 	</div>
 	<div class="form-group row">
-    		<label for="count" class="col-3 col-form-label">count:</label>
+    		<label for="inp-count" class="col-3 col-form-label">number of elements:</label>
    		<div class="col-9">
-    			<input type="number" class="form-control target" id="count" min="0">
+    			<input type="number" class="form-control target" id="inp-count" min="0">
    	 	</div>
   	</div>    
 	
 	
 	<div class="form-group row">
-    		<label for="width_single" class="col-3 col-form-label">width board+spacing:</label>
+    		<label for="width_w_spacing" class="col-3 col-form-label">width board+spacing:</label>
    		<div class="col-9">
-    			<input type="number" class="form-control" id="width_single" readonly>
+    			<input type="number" class="form-control" id="width_w_spacing" readonly>
    	 	</div>
   	</div>
 	<div class="form-group row">
