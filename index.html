@@ -1,267 +1,264 @@
 <!DOCTYPE html>
 <html>
-<head>
-  	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  	<title>element layout</title>
-  	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>element layout</title>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      	<link rel="stylesheet" type="text/css" href="//stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-      	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
-	<style>
+        <style>
 @media print {
-	
-	.avoid-page-break { page-break-inside: avoid; }
-	
-		}
-	</style>
-
-	<script type="text/javascript" src="//code.jquery.com/jquery-git.js"></script>
-      	<script type="text/javascript" src="//code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-      	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-      	<script type="text/javascript" src="//stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.6/svg.min.js"></script>
-
-	<script type="text/javascript">
-$(document).ready(function() {
-	"use strict";
-	      
-	var svg_drawing;	      
-	var mode = "total";
-	      
-function get_local_storage_w_default(key, def, cast) {
-	if (typeof(Storage) !== "undefined" && key in localStorage) {
-		return cast? cast(localStorage[key]): localStorage[key];
-	}
-	return def;
+    .avoid-page-break { page-break-inside: avoid; }
 }
-	
-function preload_values() {
-	"use strict";
-	$("#inp-width_element").val(get_local_storage_w_default("width_element", 55, Number));
-	$("#inp-width_total").val(get_local_storage_w_default("width_total", 55, Number));
-	$("#inp-count").val(get_local_storage_w_default("count", 9, Number));
- 	$("#inp-spacing").val(get_local_storage_w_default("spacing", 1, Number));
-  	$("#inp-margin").val(get_local_storage_w_default("margin", 1, Number));
-  	$("#inp-width_total").val(get_local_storage_w_default("width_total", 0, Number));
-}
-	     	
-function update_calculation() {
+        </style>
 
-	var width_element = + $("#inp-width_element").val();
-	var count = + $("#inp-count").val();
-	var spacing = + $("#inp-spacing").val();
-	var margin = + $("#inp-margin").val();
-	var width_total = + $("#inp-width_total").val();
-	
-	if (mode == "total") {
-		width_total = width_element * count + spacing * (count -1) + 2*margin;
-		$("#inp-width_total").val( width_total );
-	}
-	else if (mode == "spacing") {
-		spacing = (width_total - 2*margin - count*width_element) / (count -1);
-		$("#inp-spacing").val(spacing);
-	}
-	
-	if (typeof(Storage) !== "undefined") {
- 		localStorage.width_element = width_element;
- 		localStorage.count = count;
- 		localStorage.spacing = spacing;
- 		localStorage.margin = margin;
- 		localStorage.width_total = width_total;
- 		localStorage.mode = mode;
-	}
-	
-	var width_w_spacing = width_element + spacing;
-	$("#width_w_spacing").val( width_w_spacing );
+        <script type="text/javascript" src="https://code.jquery.com/jquery-git.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+        <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.6/svg.min.js"></script>
 
+        <script type="text/javascript">
+            $(document).ready(function() {
+                "use strict";
 
-	var svg_width = svg_drawing.viewbox().width;
-	var w0 = svg_width * 0.9;
-	var h0 = 50;
-	var x0 = svg_width * 0.05;
-	var y0 = 20;
-	var board_h = 70;
+                var svg_drawing;	      
+                var mode = "total";
 
-	var transform_coord_x = function(x) {
-		return x * w0 / width_total;
-	};
-		
-	var line_style = { color: 'black', width: 1 };
-	var fill_style_board = 'BurlyWood';
-	var fill_style_single = 'NavajoWhite';
-	
-	svg_drawing.clear();
-	
-	svg_drawing.rect(w0, h0)
-		.move(x0, y0)
-		.fill(fill_style_single)
-		.stroke(line_style);
-	
-	$('#markers > tbody').empty();
-	
-	var i;
-	for (i = 0; i< count; ++i) {
-		var marker1 = margin + i*(width_element + spacing);
-		var marker2 = marker1 + width_element;
-		$('#markers').append('<tr><td>'+(i+1)+'</td><td>'+marker1+'</td><td>'+marker2+'</td></tr>');
+                function get_local_storage_w_default(key, def, cast) {
+                    if (typeof(Storage) !== "undefined" && key in localStorage) {
+                        return cast? cast(localStorage[key]): localStorage[key];
+                    }
+                    return def;
+                }
 
-		var poly;
-		if (width_element != 0) {
-			poly = svg_drawing.rect(transform_coord_x(width_element), board_h);
-			poly.fill(fill_style_board);
-		}
-		else {
-			poly = svg_drawing.line(0, 0, 0, board_h);
-		}
-		poly.move(x0 + transform_coord_x(marker1), 10)
-			.stroke(line_style);
+                function preload_values() {
+                    "use strict";
+                    $("#inp-width_element").val(get_local_storage_w_default("width_element", 55, Number));
+                    $("#inp-width_total").val(get_local_storage_w_default("width_total", 55, Number));
+                    $("#inp-count").val(get_local_storage_w_default("count", 9, Number));
+                    $("#inp-spacing").val(get_local_storage_w_default("spacing", 1, Number));
+                    $("#inp-margin").val(get_local_storage_w_default("margin", 1, Number));
+                    $("#inp-width_total").val(get_local_storage_w_default("width_total", 0, Number));
+                }
 
-	}
+                function update_calculation() {
 
-}
+                    var width_element = + $("#inp-width_element").val();
+                    var count = + $("#inp-count").val();
+                    var spacing = + $("#inp-spacing").val();
+                    var margin = + $("#inp-margin").val();
+                    var width_total = + $("#inp-width_total").val();
 
-	function spacing_1_1() { $("#inp-spacing").val($("#inp-width_element").val()); update_calculation(); }
-	function spacing_2_1() { $("#inp-spacing").val($("#inp-width_element").val()/2); update_calculation(); }
-	function margin_1_1() { $("#inp-margin").val($("#inp-spacing").val()); update_calculation(); }
-	function margin_2_1() { $("#inp-margin").val($("#inp-spacing").val()/2); update_calculation(); }
+                    if (mode == "total") {
+                        width_total = width_element * count + spacing * (count -1) + 2*margin;
+                        $("#inp-width_total").val( width_total );
+                    }
+                    else if (mode == "spacing") {
+                        spacing = (width_total - 2*margin - count*width_element) / (count -1);
+                        $("#inp-spacing").val(spacing);
+                    }
 
-	function set_mode_spacing() {
-		mode = "spacing"; 
-		$("#inp-spacing").attr("readonly", true); 
-		$("#inp-width_total").attr("readonly", false); 
-		update_calculation();
-	}
+                    if (typeof(Storage) !== "undefined") {
+                        localStorage.width_element = width_element;
+                        localStorage.count = count;
+                        localStorage.spacing = spacing;
+                        localStorage.margin = margin;
+                        localStorage.width_total = width_total;
+                        localStorage.mode = mode;
+                    }
 
-	function set_mode_total() {
-		mode = "total"; 
-		$("#inp-spacing").attr("readonly", false); 
-		$("#inp-width_total").attr("readonly", true); 
-		update_calculation();
-	}
-
-	
-$(function() {
-	svg_drawing = SVG('drawing').size('100%', 100)
-	preload_values();
-	update_calculation();
-	$(".target").change(update_calculation);
-	$("#btn-update").click(update_calculation);
-	$("#btn-spacing_1_1").click(spacing_1_1);
-	$("#btn-spacing_2_1").click(spacing_2_1);
-	$("#btn-margin_1_1").click(margin_1_1);
-	$("#btn-margin_2_1").click(margin_2_1);
-	$("#btn-mode-total").change(set_mode_total);
-	$("#btn-mode-spacing").change(set_mode_spacing);
-});
-});
-	</script>
+                    var width_w_spacing = width_element + spacing;
+                    $("#width_w_spacing").val( width_w_spacing );
 
 
-</head>
+                    var svg_width = svg_drawing.viewbox().width;
+                    var w0 = svg_width * 0.9;
+                    var h0 = 50;
+                    var x0 = svg_width * 0.05;
+                    var y0 = 20;
+                    var board_h = 70;
 
-<body>
-<div class="container">
+                    var transform_coord_x = function(x) {
+                        return x * w0 / width_total;
+                    };
 
-	<h1>Calculate equidistant element layout</h1>
-	<div>
-	You want to lay out N elements with equal width and equal spacing?
-	</div>
-	
-<div class="btn-group btn-group-toggle" data-toggle="buttons">
-  <label class="btn btn-secondary active">
-    <input type="radio" name="options" id="btn-mode-total" autocomplete="off" checked> Total
-  </label>
-  <label class="btn btn-secondary">
-    <input type="radio" name="options" id="btn-mode-spacing" autocomplete="off"> Spacing
-  </label>
-</div>
+                    var line_style = { color: 'black', width: 1 };
+                    var fill_style_board = 'BurlyWood';
+                    var fill_style_single = 'NavajoWhite';
+
+                    svg_drawing.clear();
+
+                    svg_drawing.rect(w0, h0)
+                        .move(x0, y0)
+                        .fill(fill_style_single)
+                        .stroke(line_style);
+
+                    $('#markers > tbody').empty();
+
+                    var i;
+                    for (i = 0; i< count; ++i) {
+                        var marker1 = margin + i*(width_element + spacing);
+                        var marker2 = marker1 + width_element;
+                        $('#markers').append('<tr><td>'+(i+1)+'</td><td>'+marker1+'</td><td>'+marker2+'</td></tr>');
+
+                        var poly;
+                        if (width_element != 0) {
+                            poly = svg_drawing.rect(transform_coord_x(width_element), board_h);
+                            poly.fill(fill_style_board);
+                        }
+                        else {
+                            poly = svg_drawing.line(0, 0, 0, board_h);
+                        }
+                        poly.move(x0 + transform_coord_x(marker1), 10)
+                            .stroke(line_style);
+
+                    }
+
+                }
+
+                function spacing_1_1() { $("#inp-spacing").val($("#inp-width_element").val()); update_calculation(); }
+                function spacing_2_1() { $("#inp-spacing").val($("#inp-width_element").val()/2); update_calculation(); }
+                function margin_1_1() { $("#inp-margin").val($("#inp-spacing").val()); update_calculation(); }
+                function margin_2_1() { $("#inp-margin").val($("#inp-spacing").val()/2); update_calculation(); }
+
+                function set_mode_spacing() {
+                    mode = "spacing"; 
+                    $("#inp-spacing").attr("readonly", true); 
+                    $("#inp-width_total").attr("readonly", false); 
+                    update_calculation();
+                }
+
+                function set_mode_total() {
+                    mode = "total"; 
+                    $("#inp-spacing").attr("readonly", false); 
+                    $("#inp-width_total").attr("readonly", true); 
+                    update_calculation();
+                }
 
 
-	<div class="float-right">
-		<button type="button" class="btn btn-primary d-print-none" id="btn-update">Update</button>
-	</div>
+                $(function() {
+                    svg_drawing = SVG('drawing').size('100%', 100)
+                    preload_values();
+                    update_calculation();
+                    $(".target").change(update_calculation);
+                    $("#btn-update").click(update_calculation);
+                    $("#btn-spacing_1_1").click(spacing_1_1);
+                    $("#btn-spacing_2_1").click(spacing_2_1);
+                    $("#btn-margin_1_1").click(margin_1_1);
+                    $("#btn-margin_2_1").click(margin_2_1);
+                    $("#btn-mode-total").change(set_mode_total);
+                    $("#btn-mode-spacing").change(set_mode_spacing);
+                });
+            });
+        </script>
 
-	<h2>Input</h2>
-	
-	
 
-	<div class="form-group row">
-		<label for="inp-width_element" class="col-3 col-form-label">element width:</label>
-   		<div class="col-9">
-		        <input id="inp-width_element" type="number" class="form-control target" min="0">
-   	 	</div>
-  	</div>
-	<div class="form-group row">
-    		<label for="inp-spacing" class="col-3 col-form-label">spacing:</label>
+    </head>
 
-		<div class="input-group col-9">
-			<input type="number" class="form-control target" id="inp-spacing" min="0">
-  			<div class="input-group-append">
-    				<button class="btn btn-outline-secondary" type="button" id="btn-spacing_1_1">1:1</button>
-    				<button class="btn btn-outline-secondary" type="button" id="btn-spacing_2_1">2:1</button>
-  			</div>
-		</div>
-  	</div>
-	
-	
-	
-	<div class="form-group row">
-    		<label for="inp-margin" class="col-3 col-form-label">margin:</label>
-		<div class="input-group col-9">
-	    		<input type="number" class="form-control target" id="inp-margin" min="0">
-  			<div class="input-group-append">
-    				<button class="btn btn-outline-secondary" type="button" id="btn-margin_1_1">1:1</button>
-    				<button class="btn btn-outline-secondary" type="button" id="btn-margin_2_1">2:1</button>
-  			</div>
-		</div>
+    <body>
+        <div class="container">
 
-	</div>
-	<div class="form-group row">
-    		<label for="inp-count" class="col-3 col-form-label">number of elements:</label>
-   		<div class="col-9">
-    			<input type="number" class="form-control target" id="inp-count" min="0">
-   	 	</div>
-  	</div>    
-	
-	
-	<div class="form-group row">
-    		<label for="width_w_spacing" class="col-3 col-form-label">width board+spacing:</label>
-   		<div class="col-9">
-    			<input type="number" class="form-control" id="width_w_spacing" readonly>
-   	 	</div>
-  	</div>
-	<div class="form-group row">
-	  	<label for="inp-width_total" class="col-3 col-form-label">total width:</label>
-		<div class="col-9">
-    			<input type="number" class="form-control target" id="inp-width_total" readonly>
-   	 	</div>
-  	</div>
-	
+            <h1>Calculate equidistant element layout</h1>
+            <div>
+                You want to lay out N elements with equal width and equal spacing?
+            </div>
 
-	<div id="drawing" class="center-block"></div>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                    <input type="radio" name="options" id="btn-mode-total" autocomplete="off" checked> Total
+                </label>
+                <label class="btn btn-secondary">
+                    <input type="radio" name="options" id="btn-mode-spacing" autocomplete="off"> Spacing
+                </label>
+            </div>
 
-	<div class="avoid-page-break">
-		<h2>Markers</h2>
-    	    	
-		<table id="markers" class="table table-striped table-condensed" style="width:100%">
-        		<thead>
-				<tr><th>No.</th><th>Position L</th><th>Position R</th></tr>
-        		</thead>
-        		<tbody></tbody>
-     		</table>
-	</div>
-    
-	<div class="d-print-none">
-		<h2>About</h2>
-		<a href="https://github.com/mru00/board-layout">Repository</a>
-	</div>
-	
-	
-	</div>
 
-	
-	</body>
+            <div class="float-right">
+                <button type="button" class="btn btn-primary d-print-none" id="btn-update">Update</button>
+            </div>
+
+            <h2>Input</h2>
+
+
+
+            <div class="form-group row">
+                <label for="inp-width_element" class="col-3 col-form-label">element width:</label>
+                <div class="col-9">
+                    <input id="inp-width_element" type="number" class="form-control target" min="0">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inp-spacing" class="col-3 col-form-label">spacing:</label>
+
+                <div class="input-group col-9">
+                    <input type="number" class="form-control target" id="inp-spacing" min="0">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="btn-spacing_1_1">1:1</button>
+                        <button class="btn btn-outline-secondary" type="button" id="btn-spacing_2_1">2:1</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="form-group row">
+                <label for="inp-margin" class="col-3 col-form-label">margin:</label>
+                <div class="input-group col-9">
+                    <input type="number" class="form-control target" id="inp-margin" min="0">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="btn-margin_1_1">1:1</button>
+                        <button class="btn btn-outline-secondary" type="button" id="btn-margin_2_1">2:1</button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <label for="inp-count" class="col-3 col-form-label">number of elements:</label>
+                <div class="col-9">
+                    <input type="number" class="form-control target" id="inp-count" min="0">
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label for="width_w_spacing" class="col-3 col-form-label">width board+spacing:</label>
+                <div class="col-9">
+                    <input type="number" class="form-control" id="width_w_spacing" readonly>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inp-width_total" class="col-3 col-form-label">total width:</label>
+                <div class="col-9">
+                    <input type="number" class="form-control target" id="inp-width_total" readonly>
+                </div>
+            </div>
+
+
+            <div id="drawing" class="center-block"></div>
+
+            <div class="avoid-page-break">
+                <h2>Markers</h2>
+
+                <table id="markers" class="table table-striped table-condensed" style="width:100%">
+                    <thead>
+                        <tr><th>No.</th><th>Position L</th><th>Position R</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div class="d-print-none">
+                <h2>About</h2>
+                <a href="https://github.com/mru00/board-layout">Repository</a>
+            </div>
+
+
+        </div>
+
+
+    </body>
 </html>
